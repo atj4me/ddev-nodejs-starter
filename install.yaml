@@ -1,0 +1,60 @@
+#ddev-generated
+# DDEV Node.js Starter Add-on
+# Details about the install.yaml file are at https://ddev.readthedocs.io/en/stable/users/extend/additional-services/#sections-and-features-of-ddev-get-add-on-installyaml
+
+name: nodejs-starter
+
+# pre_install_actions - actions to run before installing the addon
+pre_install_actions:
+  - |
+    #ddev-description:Validate Node.js project structure
+    if [ ! -f package.json ]; then
+      echo "Warning: No package.json found. This addon is designed for Node.js projects."
+      echo "Consider running 'npm init' first to create a package.json file."
+    fi
+
+# List of files copied into project .ddev directory
+# Each file should contain #ddev-generated so it can be replaced by a later `ddev add-on get`
+project_files:
+  - config.nodejs.yaml
+  - docker-compose.nodejs.yaml
+
+# Version constraint for DDEV 
+ddev_version_constraint: '>= v1.24.3'
+
+# post_install_actions - actions executed after installation
+post_install_actions:
+  - |
+    #ddev-description:Update main config.yaml to include Node.js configuration
+    if [ ! -f .ddev/config.yaml ]; then
+      echo "Creating initial config.yaml with Node.js settings"
+      cp .ddev/config.nodejs.yaml .ddev/config.yaml
+    else
+      echo "Existing config.yaml found. Please merge the settings from config.nodejs.yaml manually."
+      echo "Key settings to add:"
+      echo "- nodejs_version: 'auto' (or specific version)"
+      echo "- docroot: dist (or your build output directory)" 
+      echo "- web_extra_exposed_ports for dev server"
+      echo "- web_extra_daemons for development server"
+      echo "- hooks for npm install and build"
+    fi
+  - |
+    #ddev-description:Show installation completion message
+    echo "DDEV Node.js Starter addon installed successfully!"
+    echo ""
+    echo "Next steps:"
+    echo "1. Review and customize .ddev/config.nodejs.yaml if needed"
+    echo "2. If you have an existing .ddev/config.yaml, merge the Node.js settings"
+    echo "3. Run 'ddev restart' to apply the configuration"
+    echo "4. Your Node.js app will be built and served from the 'dist' directory"
+    echo "5. Development server (if configured) will be available on port 4321"
+    echo ""
+    echo "For more details, see the README.md file."
+
+# removal_actions - actions executed during addon removal
+removal_actions:
+  - |
+    #ddev-description:Clean up Node.js addon files
+    echo "Removing DDEV Node.js Starter addon files..."
+    echo "Note: Your main .ddev/config.yaml file is preserved."
+    echo "You may need to manually remove Node.js-specific settings if desired."

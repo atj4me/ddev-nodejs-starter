@@ -1,0 +1,55 @@
+#ddev-generated
+# DDEV Node.js additional services
+# This file can be used to add additional services for Node.js development
+
+services:
+  # Example: Add Node.js-specific development tools
+  # Uncomment and customize as needed
+  
+  # nodejs-tools:
+  #   container_name: ddev-${DDEV_SITENAME}-nodejs-tools
+  #   image: node:${NODEJS_VERSION:-20}-alpine
+  #   command: tail -f /dev/null
+  #   restart: "no"
+  #   labels:
+  #     com.ddev.site-name: ${DDEV_SITENAME}
+  #     com.ddev.approot: ${DDEV_APPROOT}
+  #   volumes:
+  #     - ".:/mnt/ddev_config"
+  #     - "ddev-global-cache:/mnt/ddev-global-cache"
+  #     - "${DDEV_APPROOT}:/var/www/html"
+  #   working_dir: /var/www/html
+  #   environment:
+  #     - NODE_ENV=development
+
+  # Example: Redis for session storage (uncomment if needed)
+  # redis:
+  #   container_name: ddev-${DDEV_SITENAME}-redis
+  #   image: redis:7-alpine
+  #   restart: "no"
+  #   labels:
+  #     com.ddev.site-name: ${DDEV_SITENAME}
+  #     com.ddev.approot: ${DDEV_APPROOT}
+  #   ports:
+  #     - "6379"
+
+  # Example: Additional database for complex applications (uncomment if needed)
+  # Note: The main 'db' container is omitted by default in config.nodejs.yaml
+  # postgres:
+  #   container_name: ddev-${DDEV_SITENAME}-postgres
+  #   image: postgres:15-alpine
+  #   restart: "no"
+  #   labels:
+  #     com.ddev.site-name: ${DDEV_SITENAME}
+  #     com.ddev.approot: ${DDEV_APPROOT}
+  #   environment:
+  #     POSTGRES_USER: db
+  #     POSTGRES_PASSWORD: db
+  #     POSTGRES_DB: db
+  #   ports:
+  #     - "5432"
+  #   volumes:
+  #     - "postgres-data:/var/lib/postgresql/data"
+
+# volumes:
+#   postgres-data:

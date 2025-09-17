@@ -3,7 +3,7 @@
 # This file provides a template for Node.js applications
 # Customize the settings below for your specific project needs
 
-name: my-nodejs-app
+name: my-nodejs-app  # Change this to your project name
 type: php  # Keep as php for web server functionality
 docroot: dist  # Change to your build output directory
 php_version: "8.1"

@@ -25,22 +25,25 @@ ddev_version_constraint: '>= v1.24.3'
 # post_install_actions - actions executed after installation
 post_install_actions:
   - |
-    #ddev-description:Update main config.yaml to include Node.js configuration
-    if [ ! -f .ddev/config.yaml ]; then
-      echo "Creating initial config.yaml with Node.js settings"
-      cp .ddev/config.nodejs.yaml .ddev/config.yaml
-      # Update project name to match directory name
-      PROJECT_NAME=$(basename "$(pwd)")
-      sed -i "s/name: my-nodejs-app/name: ${PROJECT_NAME}/" .ddev/config.yaml
-    else
-      echo "Existing config.yaml found. Please merge the settings from config.nodejs.yaml manually."
-      echo "Key settings to add:"
-      echo "- nodejs_version: 'auto' (or specific version)"
-      echo "- docroot: dist (or your build output directory)" 
-      echo "- web_extra_exposed_ports for dev server"
-      echo "- web_extra_daemons for development server"
-      echo "- hooks for npm install and build"
-    fi
+    #ddev-description:Provide Node.js configuration guidance
+    echo "DDEV Node.js Starter addon installed successfully!"
+    echo ""
+    echo "Node.js configuration template available at: .ddev/config.nodejs.yaml"
+    echo ""
+    echo "Next steps:"
+    echo "1. Copy the Node.js-specific settings from .ddev/config.nodejs.yaml"
+    echo "2. Merge them into your main .ddev/config.yaml file"
+    echo "3. Customize the settings for your specific framework and project"
+    echo "4. Run 'ddev restart' to apply the configuration"
+    echo ""
+    echo "Key settings to configure:"
+    echo "- nodejs_version: Node.js version (auto reads from .nvmrc)"
+    echo "- docroot: Your build output directory (dist, build, out, etc.)"
+    echo "- web_extra_exposed_ports: Development server port (4321, 3000, etc.)"
+    echo "- web_extra_daemons: Framework-specific dev server command"
+    echo "- hooks: npm install and build automation"
+    echo ""
+    echo "See README.md for framework-specific examples and troubleshooting."
   - |
     #ddev-description:Show installation completion message
     echo "DDEV Node.js Starter addon installed successfully!"

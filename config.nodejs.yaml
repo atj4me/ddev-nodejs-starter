@@ -1,22 +1,13 @@
 #ddev-generated
 # DDEV Node.js configuration template
-# This file provides a template for Node.js applications
-# Customize the settings below for your specific project needs
-
-name: my-nodejs-app  # Change this to your project name
-type: php  # Keep as php for web server functionality
-docroot: dist  # Change to your build output directory
-php_version: "8.1"
-webserver_type: nginx-fpm
-xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
-use_dns_when_possible: true
-composer_version: "2"
-web_environment: []
+# This file contains Node.js-specific settings to be merged into your main config.yaml
+# Copy the relevant sections below into your .ddev/config.yaml file
 
 # Node.js version - 'auto' reads from .nvmrc, or specify version like '18', '20'
 nodejs_version: "auto"
+
+# Build output directory - change to your framework's build directory
+docroot: dist  # Common alternatives: build, out, public
 
 # Omit database container for Node.js apps (uncomment if you need a database)
 omit_containers: ["db"]

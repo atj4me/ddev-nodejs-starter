@@ -1,0 +1,57 @@
+#ddev-generated
+# DDEV Node.js configuration template
+# This file contains Node.js-specific settings to be merged into your main config.yaml
+# Copy the relevant sections below into your .ddev/config.yaml file
+
+# Node.js version - 'auto' reads from .nvmrc, or specify version like '18', '20'
+nodejs_version: "auto"
+
+# Build output directory - change to your framework's build directory
+docroot: dist  # Common alternatives: build, out, public
+
+# Omit database container for Node.js apps (uncomment if you need a database)
+omit_containers: ["db"]
+
+# Disable upload directories warning for Node.js projects
+disable_upload_dirs_warning: true
+
+# Configure development server port exposure
+# Customize the ports below for your framework:
+# - Vite/Astro typically use 4321
+# - Next.js typically uses 3000  
+# - Create React App typically uses 3000
+# - Nuxt.js typically uses 3000
+web_extra_exposed_ports:
+    - name: nodejs-dev
+      container_port: 4321  # Change to your dev server port
+      http_port: 4322       # External HTTP port
+      https_port: 4321      # External HTTPS port
+
+# Development server daemon
+# Customize the commands below for your framework:
+web_extra_daemons:
+  - name: nodejs-dev-daemon
+    # Customize this command for your framework:
+    # For Astro: npm run dev -- --host
+    # For Vite: npm run dev -- --host
+    # For Next.js: npm run dev -- --hostname 0.0.0.0
+    # For Create React App: npm start
+    # For Nuxt.js: npm run dev -- --host 0.0.0.0
+    command: bash -c 'npm install && touch /var/tmp/npminstalldone && npm run dev -- --host'
+    directory: /var/www/html
+
+# Post-start hooks for Node.js setup
+hooks:
+  post-start:
+    # Wait for npm install to complete
+    - exec: bash -c 'while [ ! -f /var/tmp/npminstalldone ]; do sleep 1; done'
+    # Build the project if dist directory doesn't exist
+    - exec: bash -c 'if [ ! -d /var/www/html/dist ]; then npm run build; fi'
+    # Display helpful information
+    - exec: echo -e "                                  NOTICE                                        \n
+                         =================================================================================\n
+                         =================================================================================\n
+                          The Node.js development container is ready \n
+                          Hot Module Reloading (HMR) is available at \e[32m${DDEV_PRIMARY_URL}:4321\e[0m \n
+                          Production build is served at \e[32m${DDEV_PRIMARY_URL}\e[0m \n
+                          To troubleshoot any issues run \e[35mddev describe\e[0m or \e[35mddev logs --follow --time\e[0m \n"

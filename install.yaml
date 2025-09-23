@@ -17,7 +17,8 @@ pre_install_actions:
 # Each file should contain #ddev-generated so it can be replaced by a later `ddev add-on get`
 project_files:
   - config.nodejs.yaml
-  - docker-compose.nodejs.yaml
+  - commands/web/prettier
+  - commands/web/textlint
 
 # Version constraint for DDEV 
 ddev_version_constraint: '>= v1.24.3'
